@@ -7,8 +7,8 @@ from torch.utils.data import DataLoader
 #用于加载刚刚设计的模型
 from 模型设计 import Model
 #用于加载预训练模型,BertTokenizer是用于加载字典和分词器，AdamW是用于加载优化器
-from transformers import BertTokenizer,AdamW
-
+from transformers import BertTokenizer
+from torch.optim import AdamW #AdamW是用于加载优化器
 #定义设备信息
 DEVICE=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -43,7 +43,7 @@ train_dataset=MyDataset("train")
 #取数据
 train_loader=DataLoader(
     dataset=train_dataset,
-    batch_size=500,#每次取几条数据，超参数，让GPU能显存占用90%左右，如果cpu怎内存占用90%左右
+    batch_size=450,#每次取几条数据，超参数，让GPU能显存占用90%左右，如果cpu怎内存占用90%左右
     shuffle=True,#是否打乱数据
     drop_last=True,#是否丢弃最后一个不足batch_size的batch
     collate_fn=collate_fn#是否自定义数据集的处理方式
@@ -77,13 +77,13 @@ if __name__=="__main__":
             loss.backward()
             #更新参数
             optimizer.step()
-            print(loss.item())
+            print(f"loss:{loss.item()}")
 
             #每隔5个批次输出训练信息
             if 0==i%5:
-                out=out.argmax(dim=1)
+                output=output.argmax(dim=1)
                 #计算训练精度
-                acc=(out==labels).sum().item()/len(labels)
+                acc=(output==labels).sum().item()/len(labels)
                 print(f"epoch:{epoch},i:{i},loss:{loss.item()},acc:{acc}")
 
         #保存模型
