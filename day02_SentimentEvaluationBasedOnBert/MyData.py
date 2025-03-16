@@ -6,7 +6,7 @@ from datasets import load_from_disk
 class MyDataset(Dataset):
     def __init__(self, split):  # 初始化数据集
         # 从磁盘加载数据集
-        self.dataset = load_from_disk(r"data\ChnSentiCorp")
+        self.dataset = load_from_disk(r"D:\AI\data\ChnSentiCorp")
         if "train" == split:
             self.dataset = self.dataset["train"]
         elif "test" == split:

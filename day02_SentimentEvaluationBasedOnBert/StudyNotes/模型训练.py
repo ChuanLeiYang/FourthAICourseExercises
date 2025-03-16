@@ -15,7 +15,7 @@ DEVICE=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 #定义训练的轮次（将整个数据集训练完一次为一个轮次）
 EPOCH=30000
 #加载字典和分词器
-token=BertTokenizer.from_pretrained(r"D:\PyCharm\day02_SentimentEvaluationBasedOnBert\model\bert-base-chinese\models--bert-base-chinese\snapshots\c30a6ed22ab4564dc1e3b2ecbf6e766b0611a33f")
+token=BertTokenizer.from_pretrained(r"D:\AI\model\bert-base-chinese\models--bert-base-chinese\snapshots\c30a6ed22ab4564dc1e3b2ecbf6e766b0611a33f")
 
 #将传进来的字符串数据进行编码
 def collate_fn(data):
@@ -58,6 +58,12 @@ if __name__=="__main__":
     optimizer=AdamW(model.parameters())
     #定义损失函数
     loss_func=torch.nn.CrossEntropyLoss()
+    #判断params文件夹是否存在，如果不存在则创建
+
+    #创建一个文件夹params，用于保存模型参数
+    import os
+    if not os.path.exists("params"):
+        os.mkdir("params")
 
     for epoch in range(EPOCH):
         for i,(input_ids,attention_mask,token_type_ids,labels) in enumerate(train_loader):

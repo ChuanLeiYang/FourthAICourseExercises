@@ -7,7 +7,7 @@ print(DEVICE)
 
 # 加载预训练模型,注意结尾的to(DEVICE)是将模型加载到设备上，是cpu还是gpu取决于DEVICE
 pretrained = BertModel.from_pretrained(
-    r"D:\PyCharm\day02_SentimentEvaluationBasedOnBert\model\bert-base-chinese\models--bert-base-chinese\snapshots\c30a6ed22ab4564dc1e3b2ecbf6e766b0611a33f").to(
+    r"D:\AI\model\bert-base-chinese\models--bert-base-chinese\snapshots\c30a6ed22ab4564dc1e3b2ecbf6e766b0611a33f").to(
     DEVICE)
 print(pretrained)
 
