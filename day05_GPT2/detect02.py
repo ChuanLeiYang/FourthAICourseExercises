@@ -1,11 +1,11 @@
-#定制化生成内容
+#定制化生成内容，对生成的文本进行格式化分
 import torch
 from transformers import AutoTokenizer,AutoModelForCausalLM
 
-tokenizer = AutoTokenizer.from_pretrained(r"D:\BaiduNetdiskDownload\gpt2-chinese模型\models--uer--gpt2-chinese-cluecorpussmall\snapshots\c2c0249d8a2731f269414cc3b22dff021f8e07a3")
-model = AutoModelForCausalLM.from_pretrained(r"D:\BaiduNetdiskDownload\gpt2-chinese模型\models--uer--gpt2-chinese-cluecorpussmall\snapshots\c2c0249d8a2731f269414cc3b22dff021f8e07a3")
+tokenizer = AutoTokenizer.from_pretrained(r"D:\AI\model\models--uer--gpt2-chinese-cluecorpussmall\snapshots\c2c0249d8a2731f269414cc3b22dff021f8e07a3")
+model = AutoModelForCausalLM.from_pretrained(r"D:\AI\model\models--uer--gpt2-chinese-cluecorpussmall\snapshots\c2c0249d8a2731f269414cc3b22dff021f8e07a3")
 
-#加载我们自己训练的权重（中文古诗词）
+#加载我们自己训练的权重（中文古诗词）,map_location="cpu"或者"cuda"
 model.load_state_dict(torch.load("params/net.pt",map_location="cpu"))
 
 #定义函数，用于生成5言绝句 text是提示词，row是生成文本的行数，col是每行的字符数。
@@ -34,6 +34,8 @@ def generate(text,row,col):
             out[:,tokenizer.get_vocab()[i]] = -float('inf')
         #去特殊符号
         out[:, tokenizer.get_vocab()["[UNK]"]] = -float('inf')
+        out[:, tokenizer.get_vocab()["[SEP]"]] = -float('inf')
+        out[:, tokenizer.get_vocab()["[PAD]"]] = -float('inf')
         #根据概率采样，无放回，避免生成重复的内容
         out = out.softmax(dim=1)
         #从概率分布中进行采样，选择下一个词的ID
