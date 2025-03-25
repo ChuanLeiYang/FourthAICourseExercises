@@ -3,8 +3,8 @@ from openai import OpenAI
 
 #定义多轮对话方法
 def run_chat_session():
-    #初始化客户端
-    client = OpenAI(base_url="http://localhost:11434/v1/",api_key="suibianxie")
+    #初始化客户端，api_key是公开的，可以随便写，但是要写
+    client = OpenAI(base_url="http://localhost:8000/v1/",api_key="suibianxie")
     #初始化对话历史
     chat_history = []
     #启动对话循环
@@ -18,7 +18,7 @@ def run_chat_session():
         chat_history.append({"role":"user","content":user_input})
         #调用模型回答
         try:
-            chat_complition = client.chat.completions.create(messages=chat_history,model="qwen2.5:0.5b")
+            chat_complition = client.chat.completions.create(messages=chat_history,model="/root/autodl-tmp/model/Qwen/Qwen2.5-0.5B-Instruct")
             #获取最新回答
             model_response = chat_complition.choices[0]
             print("AI:",model_response.message.content)
