@@ -1,8 +1,8 @@
 import requests
-
+#这里的和http://localhost 和RAGFlow的API界面中“API 服务器”的地址保持一致
 BASE_URL = 'http://localhost:80/api/v1/'  # 关键修改：确保路径层级正确
-API_KEY = 'ragflow-Q0NGQ2NmNlMjFlMDExZjBiNDFmMDI0Mm'
-CHAT_ID = "4a8380fe21d611f0aceb0242c0a8b006"  # 替换为服务端提供的固定 chat_id
+API_KEY = 'ragflow-BlYTIzMjhlNDJlMTExZjA4OWQ0OTY4MT'#RAGFlow的API界面中申请的API Key
+CHAT_ID = "93fc19ba422611f085d3eea7f2bb8f62"  # 替换为服务端提供的固定 chat_id
 
 
 def get_answer(user_message):
